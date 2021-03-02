@@ -1,33 +1,23 @@
-https://auth0.com/blog/use-typescript-to-create-a-secure-api-with-nodejs-and-express-getting-started/
+# Auth Sample Project
 
-express:
-https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript
+This is a 3-part project that demonstrates a custom local auth system for a simple todo web app.
 
-typeorm:
-https://typeorm.io/#/
+A backend API serves as the main engine and connects to the database. There are two front-end applications - one is a user-facing web application. The other is an admin web application strictly for admin tasks. This project shows how to scope functionality to these separate types of users.
 
-https://medium.com/@keikaavousi/nodejs-authentication-with-jwt-and-cookies-3fb1c8c739ba
+All the projects use node, and the suite can be run with the followign commands, in four separate terminals. For each project, `cd` into it, run `npm install`, and then `npm start`. The user-facing web app is created using create-react-app and requires two separate terminals - one for the client app, and one for the thin server that talks to the backend API.
 
 
-## Auth Admin
+## Auth Typescript API (auth_ts_api)
 
-This project is a proof of concept for a customized local login system for a simple web app.
+This is the backend system that serves as the main engine for the two front-end applications. 
 
-This project uses Node.js and Express for running the web server. The front-end code is simple vanilla JS, JQuery, and Bootstrap v5
-
-It connects to the related backend API and gives access to endpoints that are protected with an admin scope. 
-
-When the user logs in, a jwt token is saved as a cookie, and that is then tacked on to subsequent requests. When the request reaches the API, the token is unpacked and the claims are verified. If the user has an admin scope, then the result is returned. If not, an error is returned.
-
-
-## Auth Typescript API
-
-This project is a proof of concept for a customized local login system for a simple todo app.
-
+To run the project:
+- `cd auth_ts_api`
+- `npm install`
+- `npm start`
+- Runs on port 3500 by default
 
 ### Technologies
-
-The following technologies are used in the project:
 - Node.js
 - Typescript: Also ts-node for running typescript
 - Express: For running a server
@@ -36,9 +26,13 @@ The following technologies are used in the project:
 - TypeORM: ORM for the DB
 - Bcrypt: For hashing passwords
 
+### Useful Resources
+- https://auth0.com/blog/use-typescript-to-create-a-secure-api-with-nodejs-and-express-getting-started/
+- https://www.digitalocean.com/community/tutorials/setting-up-a-node-project-with-typescript
+- https://typeorm.io/#/
+- https://medium.com/@keikaavousi/nodejs-authentication-with-jwt-and-cookies-3fb1c8c739ba
 
 ### General User Flow
-
 1. User signs up with email and password: `POST /api/signup`
 - Verifies the user doesn't already exist
 - Saves new user into the system with a hashed password
@@ -62,32 +56,58 @@ The following technologies are used in the project:
 - Hard-deletes the task from the db
 
 
-### Admin notes
+## Admin web app (auth_admin)
 
-There is also a separate scope for admin functionality. 
+This project is a simple front-end project that serves as an admin dashboard for todo app. The front-end code is simple vanilla JS, JQuery, and Bootstrap v5. It connects to the related backend API and gives access to endpoints that are protected with an admin scope. 
 
-Create an admin: `POST /api/admin` with email and password
-- Only admins can create admins
+When the user logs in, a JWT token is saved as a cookie, and that is then tacked on to subsequent requests. When the request reaches the API, the token is unpacked and the claims are verified. If the user has an admin scope, then the result is returned. If not, an error is returned.
 
-View all users: `GET /api/user`
+To run:
+- `cd auth_admin`
+- `npm install`
+- `npm start`
+- Runs on port 3400 by default
+
+### Functionality
+- Log in
+- Create a new admin user
+- View all users
 
 
-### Other Features
+## User app
 
-- Separation of code: Separate code for route handlers, business logic, and data access
-- Custom dependency injection
+This project is a front-end web app that a user can use to create and complete their todo tasks. It is a react application that uses create-react-app.
+
+The flow is generally the same as the admin web app, but it checks for the 'regular' claim.
+
+Since it's used with create-react-app, there are actually two projects - the front-end react code, and the server code that will interact with the backend API.
+
+To run, open up two terminals.
+
+Run the server portion in the first terminal:
+- `cd auth_web`
+- `npm install`
+- `npm start`
+- Runs on port 3300 by default
+
+Run the client portion in the second terminal:
+- `cd auth_web/client`
+- `npm install`
+- `npm start`
+- Runs on port 3000 by default
+
+### Functionality
+- Sign up as a new user
+- Log in
+- View your tasks
+- Complete a task
+- Create a new task
 
 
-### Next Steps
-
-- Will be adding two separate web applications to communicate with the api: One for general users, and one for admins
+## Next Steps
+- Clean up error-handling
 - Implement email verification and ability to change passwords
 - Improved logout functionality
 - Postman library for developing and testing
 - Tests
 
-
-TS api: 3500
-admin: 3400
-web: 3300
-client: 3000
