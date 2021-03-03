@@ -110,4 +110,3 @@ Run the client portion in the second terminal:
 - Improved logout functionality
 - Postman library for developing and testing
 - Tests
-
